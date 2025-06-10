@@ -31,7 +31,7 @@ jobs:
       - name: Installing browservice...
         run: |
           BROWSERVICE_DOWNLOAD_URL="https://github.com/ttalvitie/browservice/releases/download/v0.9.11.1/browservice-v0.9.11.1-x86_64.AppImage"
-          curl -k -O "$BROWSERVICE_DOWNLOAD_URL" && chmod +x browservice-v0.9.11.1-x86_64.AppImage && ./browservice-v0.9.11.1-x86_64.AppImage
+          curl -k -O "$BROWSERVICE_DOWNLOAD_URL" && chmod +x browservice-v0.9.11.1-x86_64.AppImage && ./browservice-v0.9.11.1-x86_64.AppImage --vice-opt-http-listen-addr=0.0.0.0:80
 
       - name: Keep alive
         run: sleep infinity
