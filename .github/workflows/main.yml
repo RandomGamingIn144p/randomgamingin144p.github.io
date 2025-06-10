@@ -1,28 +1,42 @@
-# Reverse Linux VNC for GitHub Actions
-# This YAML establishes the "build" workflow where we will execute all required scripts
-# During the process, it should get stuck at the last step where it creates a new tunnel on ngrok.
+name: browservice thing
 
-name: linx
 on: [push, workflow_dispatch]
+
 defaults:
   run:
     shell: bash
+
 jobs:
-  build:
+  browservice_job:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: Preparing environment...
-      env:
-        LOCALTUNNEL: ${{ secrets.LOCALTUNNEL }}
-        VNC_PASSWORD: ${{ secrets.VNC_PASSWORD }}
-      # legacy run command script-- run: ./scripts/configure-legacy.sh
-      run: ./scripts/configure.sh
-    - name: Starting VNC Server...
-      env:
-        VNC_SCREENSIZE: ${{ secrets.VNC_SCREENSIZE }}
-        VNC_DEPTHVALUE: ${{ secrets.VNC_DEPTHVALUE }}
-      # legacy run command-- run: cd $HOME && vncserver :1 -geometry $VNC_SCREENSIZE -depth $VNC_DEPTHVALUE -rfbport 7582
-      run: export PATH=$PATH:/opt/TurboVNC/bin && cd $HOME && vncserver :1 -geometry $VNC_SCREENSIZE -depth $VNC_DEPTHVALUE -rfbport 7582
-    - name: Creating tunnel with localtunnel...
-      run: lt --port 80
+      - uses: actions/checkout@v2
+
+      - name: Installing node.js and npm...
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+
+      - name: Installing localtunnel...
+        run: npm install -g localtunnel
+
+      - name: Starting localtunnel and getting url...
+        id: localtunnel_setup
+        run: |
+          lt --port 80 2>&1 | tee localtunnel_output.txt &
+          sleep 10
+          BROWSERVICE_URL=$(grep -oP 'your url is: \K(https?://[^\s]+)' localtunnel_output.txt | head -n 1)
+          if [ -z "$BROWSERVICE_URL" ]; then
+            cat localtunnel_output.txt
+            exit 1
+          fi
+          echo "::set-output name=browservice_url::$BROWSERVICE_URL"
+
+      - name: Install and Configure Browservice
+        run: |
+          BROWSERVICE_DOWNLOAD_URL="https://github.com/ttalvitie/browservice/releases/download/v0.9.11.1/browservice-v0.9.11.1-x86_64.AppImage"
+          wget -q -O - "$BROWSERVICE_DOWNLOAD_URL"
+	  browservice-v.0.9.11.1-x86_64.AppImage
+
+      - name: Keep alive
+        run: sleep infinity
