@@ -27,8 +27,6 @@ jobs:
           cat localtunnel_output.txt
           wget -q -O - https://loca.lt/mytunnelpassword | tee ip.txt
           cat ip.txt
-          exit 1
-          fi
 
       - name: Installing browservice...
         run: |
