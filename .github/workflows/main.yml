@@ -23,7 +23,7 @@ jobs:
       - name: Starting localtunnel and getting url...
         id: localtunnel_setup
         run: |
-          wget -q -O - https://loca.lt/mytunnelpassword | tee ip.txt && cat ip.txt
+          curl https://loca.lt/mytunnelpassword | tee ip.txt && cat ip.txt
           lt --port 80 2>&1 | tee localtunnel_output.txt &
           cat localtunnel_output.txt
 
