@@ -23,14 +23,14 @@ jobs:
       - name: Starting localtunnel and getting url...
         id: localtunnel_setup
         run: |
-          curl https://loca.lt/mytunnelpassword | tee ip.txt && cat ip.txt
-          lt --port 80 2>&1 | tee localtunnel_output.txt &
+          curl https://loca.lt/mytunnelpassword | tee ip.txt
+          lt --port 8080 2>&1 | tee localtunnel_output.txt &
           cat localtunnel_output.txt
 
       - name: Installing browservice...
         run: |
           BROWSERVICE_DOWNLOAD_URL="https://github.com/ttalvitie/browservice/releases/download/v0.9.11.1/browservice-v0.9.11.1-x86_64.AppImage"
-          curl -k -O "$BROWSERVICE_DOWNLOAD_URL" && chmod +x browservice-v0.9.11.1-x86_64.AppImage && ./browservice-v0.9.11.1-x86_64.AppImage --vice-opt-http-listen-addr=0.0.0.0:80
+          curl -k -O "$BROWSERVICE_DOWNLOAD_URL" && chmod +x browservice-v0.9.11.1-x86_64.AppImage && ./browservice-v0.9.11.1-x86_64.AppImage --vice-opt-http-listen-addr=0.0.0.0:8080 &
 
       - name: Keep alive
         run: sleep infinity
