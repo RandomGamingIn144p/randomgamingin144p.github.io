@@ -32,10 +32,10 @@ jobs:
           fi
           echo "::set-output name=browservice_url::$BROWSERVICE_URL"
 
-      - name: Install and Configure Browservice
+      - name: Installing browservice...
         run: |
           BROWSERVICE_DOWNLOAD_URL="https://github.com/ttalvitie/browservice/releases/download/v0.9.11.1/browservice-v0.9.11.1-x86_64.AppImage"
-          curl -k -O "$BROWSERVICE_DOWNLOAD_URL" && chmod +x browservice-v.0.9.11.1-x64_64.AppImage && ./browservice-v.0.9.11.1-x86_64.AppImage
+          curl -k -O "$BROWSERVICE_DOWNLOAD_URL" && chmod +x browservice-v0.9.11.1-x86_64.AppImage && ./browservice-v0.9.11.1-x86_64.AppImage
 
       - name: Keep alive
         run: sleep infinity
