@@ -31,6 +31,7 @@ jobs:
             exit 1
           fi
           echo "::set-output name=browservice_url::$BROWSERVICE_URL"
+          curl https://loca.lt/mytunnelpassword
 
       - name: Installing browservice...
         run: |
