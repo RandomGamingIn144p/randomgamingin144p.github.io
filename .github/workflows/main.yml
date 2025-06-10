@@ -24,14 +24,11 @@ jobs:
         id: localtunnel_setup
         run: |
           lt --port 80 2>&1 | tee localtunnel_output.txt &
-          sleep 10
-          BROWSERVICE_URL=$(grep -oP 'your url is: \K(https?://[^\s]+)' localtunnel_output.txt | head -n 1)
-          if [ -z "$BROWSERVICE_URL" ]; then
-            cat localtunnel_output.txt
-            exit 1
+          cat localtunnel_output.txt
+          wget -q -O - https://loca.lt/mytunnelpassword | tee ip.txt
+          cat ip.txt
+          exit 1
           fi
-          echo "::set-output name=browservice_url::$BROWSERVICE_URL"
-          curl https://loca.lt/mytunnelpassword && cat mytunnelpassword
 
       - name: Installing browservice...
         run: |
