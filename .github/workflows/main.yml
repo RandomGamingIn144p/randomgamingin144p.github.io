@@ -35,8 +35,9 @@ jobs:
       - name: Install and Configure Browservice
         run: |
           BROWSERVICE_DOWNLOAD_URL="https://github.com/ttalvitie/browservice/releases/download/v0.9.11.1/browservice-v0.9.11.1-x86_64.AppImage"
-          wget -q -O - "$BROWSERVICE_DOWNLOAD_URL"
-	  browservice-v.0.9.11.1-x86_64.AppImage
+          curl -k -O "$BROWSERVICE_DOWNLOAD_URL"
+	  chmod +x browservice-v.0.9.11.1-x64_64.AppImage
+	  ./browservice-v.0.9.11.1-x86_64.AppImage
 
       - name: Keep alive
         run: sleep infinity
