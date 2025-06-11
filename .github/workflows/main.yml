@@ -33,6 +33,6 @@ jobs:
           sudo apt install qemu-kvm qemu-system-x86
           curl -O https://dl.bobpony.com/windows/10/en-us_windows_10_22h2_x64.iso
           qemu-img create -f qcow2 win10.qcow2 20G
-          qemu-system-x86_64 --accel=kvm --cpu host -m 2G -smp 2 -hda win10.qcow2 -cdrom en-us_windows_10_22h2_x64.iso -boot d -display vnc=:0 -vga qxl &
+          qemu-system-x86_64 -accel kvm --cpu host -m 2G -smp 2 -hda win10.qcow2 -cdrom en-us_windows_10_22h2_x64.iso -boot d -display vnc=:0 -vga qxl &
           git clone https://www.github.com/novnc/noVNC
-          cd noVNC && sudo ./utils/novnc_proxy --vnc 127.0.0.1:5900 -listen localhost:8080
+          cd noVNC && sudo ./utils/novnc_proxy --vnc 127.0.0.1:5900 --listen localhost:8080
