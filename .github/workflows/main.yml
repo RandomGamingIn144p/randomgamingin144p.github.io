@@ -1,4 +1,4 @@
-name: browservice thing
+name: windows 10 ltsc vnc server
 
 on: [push, workflow_dispatch]
 
