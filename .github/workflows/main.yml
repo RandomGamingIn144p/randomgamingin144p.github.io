@@ -20,9 +20,9 @@ jobs:
       - name: Installing and configuring CollabVM + QEMU...
         run: |
           sudo apt update
-          sudo apt install qemu-kvm qemu-system-x86
-          npm install -G localtunnel
-          git clone https://github.com/legoskid/compiled-collab-vm-server-linux
+          sudo apt install qemu-kvm qemu-system-x86 libossp-uuid16
+          npm install -G localtunnel &
+          git clone https://github.com/legoskid/compiled-collab-vm-server-linux &
           ls && cd compiled-collab-vm-server-linux/cvm/final && chmod +x collab-vm-server && sudo ./collab-vm-server 6004 &
           lt --port 6004 &
           curl -k https://loca.lt/mytunnelpassword &
