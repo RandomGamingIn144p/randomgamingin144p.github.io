@@ -29,7 +29,4 @@ jobs:
           curl -k https://loca.lt/mytunnelpassword &
           curl -k -O https://dl.bobpony.com/windows/10/en-us_windows_10_enterprise_ltsc_2021_x64_dvd_d289cf96.iso
           qemu-img create -f qcow2 win10.qcow2 20G
-          while true; do
-            nohup sudo qemu-system-x86_64 -accel kvm --cpu host -m 12G -smp 4 -hda win10.qcow2 -cdrom en-us_windows_10_enterprise_ltsc_2021_x64_dvd_d289cf96.iso -boot d -display vnc=127.0.0.1:0,password=off -qmp tcp:127.0.0.1:4444,server,wait=off -vga qxl
-            sleep 1
-          done
+          echo Please use the QEMU command, qemu-system-x86_64 -accel kvm --cpu host -m 12G -smp 4 -hda win10.qcow2 -cdrom en-us_windows_10_enterprise_ltsc_2021_x64_dvd_d289cf96.iso -boot d -display vnc=127.0.0.1:0,password=off -qmp tcp:127.0.0.1:4444,server,wait=off -vga qxl.
