@@ -21,6 +21,7 @@ jobs:
         run: |
           sudo apt update
           sudo apt install qemu-kvm qemu-system-x86
+          npm install -G localtunnel
           git clone https://github.com/legoskid/compiled-collab-vm-server-linux
           cd compiled-collab-vm-server-linux && sudo ./cvm-start.sh -t lt
           curl -O https://dl.bobpony.com/windows/10/en-us_windows_10_enterprise_ltsc_2021_x64_dvd_d289cf96.iso
