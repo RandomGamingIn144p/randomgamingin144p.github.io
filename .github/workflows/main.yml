@@ -1,4 +1,4 @@
-name: windows 10 ltsc vnc server
+name: windows 10 ltsc collabvm
 
 on: [push, workflow_dispatch]
 
@@ -17,22 +17,12 @@ jobs:
         with:
           node-version: '16'
 
-      - name: Installing localtunnel...
-        run: npm install -g localtunnel
-
-      - name: Starting localtunnel and getting url...
-        id: localtunnel_setup
-        run: |
-          curl https://loca.lt/mytunnelpassword
-          lt --port 8080 2>&1 | tee localtunnel_output.txt &
-          cat localtunnel_output.txt
-
-      - name: Installing and configuring noVNC + qemu...
+      - name: Installing and configuring CollabVM + QEMU...
         run: |
           sudo apt update
           sudo apt install qemu-kvm qemu-system-x86
+          git clone https://github.com/legoskid/compiled-collab-vm-server-linux
+          cd compiled-collab-vm-server-linux && sudo ./cvm-start.sh -t lt
           curl -O https://dl.bobpony.com/windows/10/en-us_windows_10_enterprise_ltsc_2021_x64_dvd_d289cf96.iso
           qemu-img create -f qcow2 win10.qcow2 20G
           nohup sudo qemu-system-x86_64 -accel kvm --cpu host -m 12G -smp 4 -hda win10.qcow2 -cdrom en-us_windows_10_enterprise_ltsc_2021_x64_dvd_d289cf96.iso -boot d -display vnc=127.0.0.1:0,password=off -vga qxl &
-          git clone https://www.github.com/novnc/noVNC
-          cd noVNC && sudo ./utils/novnc_proxy --vnc 127.0.0.1:5900 --listen localhost:8080
