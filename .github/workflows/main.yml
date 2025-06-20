@@ -20,7 +20,7 @@ jobs:
       - name: Installing and configuring CollabVM + QEMU...
         run: |
           sudo apt update
-          sudo apt install qemu-kvm qemu-system-x86 libossp-uuid16 libvncserver1
+          sudo apt install qemu-kvm qemu-system-x86 libossp-uuid16 libvncserver1 libvncclient1
           npm install -g localtunnel
           git clone https://github.com/legoskid/compiled-collab-vm-server-linux
           ls && cd compiled-collab-vm-server-linux/cvm/final && chmod +x collab-vm-server && sudo ./collab-vm-server 6004 &
